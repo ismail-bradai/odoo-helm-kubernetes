@@ -1,0 +1,27 @@
+﻿
+apiVersion: v2
+
+name: odoo-chart
+
+description: Helm Chart pour d├®ployer Odoo 15 avec PostgreSQL et MinIO S3
+
+type: application
+
+version: 1.0.0
+
+appVersion: "15.0"
+
+maintainers:
+
+  - name: Ismail
+
+    email: ismail@societe.com
+
+keywords:
+
+  - odoo
+
+  - erp
+
+  - kubernetes
+

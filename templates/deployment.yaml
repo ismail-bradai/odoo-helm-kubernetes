@@ -1,0 +1,131 @@
+﻿
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+
+  name: odoo
+
+  namespace: {{ .Values.namespace }}
+
+  labels:
+
+    {{- include "odoo.labels" . | nindent 4 }}
+
+spec:
+
+  replicas: {{ .Values.replicaCount }}
+
+  selector:
+
+    matchLabels:
+
+      {{- include "odoo.selectorLabels" . | nindent 6 }}
+
+  template:
+
+    metadata:
+
+      labels:
+
+        {{- include "odoo.selectorLabels" . | nindent 8 }}
+
+    spec:
+
+      nodeSelector:
+
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+
+      tolerations:
+
+        {{- toYaml .Values.tolerations | nindent 8 }}
+
+      securityContext:
+
+        runAsUser: 0
+
+        runAsGroup: 0
+
+        fsGroup: 0
+
+      containers:
+
+        - name: odoo
+
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          ports:
+
+            - containerPort: 8069
+
+            - containerPort: 8072
+
+          envFrom:
+
+            - secretRef:
+
+                name: odoo-minio-secret
+
+          env:
+
+            - name: HOST
+
+              value: {{ .Values.postgresql.host | quote }}
+
+            - name: USER
+
+              value: {{ .Values.postgresql.user | quote }}
+
+            - name: PASSWORD
+
+              value: {{ .Values.postgresql.password | quote }}
+
+          volumeMounts:
+
+            - name: odoo-data
+
+              mountPath: /var/lib/odoo
+
+            - name: odoo-config
+
+              mountPath: /etc/odoo/odoo.conf
+
+              subPath: odoo.conf
+
+            - name: odoo-logs
+
+              mountPath: /var/log/odoo
+
+            - name: custom-addons
+
+              mountPath: /mnt/extra-addons
+
+      volumes:
+
+        - name: odoo-config
+
+          configMap:
+
+            name: odoo-config
+
+        - name: odoo-data
+
+          persistentVolumeClaim:
+
+            claimName: odoo-data-pvc
+
+        - name: odoo-logs
+
+          persistentVolumeClaim:
+
+            claimName: odoo-logs-pvc
+
+        - name: custom-addons
+
+          persistentVolumeClaim:
+
+            claimName: odoo-addons-pvc
+

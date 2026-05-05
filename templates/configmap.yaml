@@ -1,0 +1,61 @@
+﻿
+apiVersion: v1
+
+kind: ConfigMap
+
+metadata:
+
+  name: odoo-config
+
+  namespace: {{ .Values.namespace }}
+
+  labels:
+
+    {{- include "odoo.labels" . | nindent 4 }}
+
+data:
+
+  odoo.conf: |
+
+    [options]
+
+    db_host = {{ .Values.postgresql.host }}
+
+    db_port = {{ .Values.postgresql.port }}
+
+    db_user = {{ .Values.postgresql.user }}
+
+    db_password = {{ .Values.postgresql.password }}
+
+    log_handler = werkzeug:INFO, :DEBUG
+
+    logfile = /var/log/odoo/odoo.log
+
+    logrotate = True
+
+    addons_path = /usr/lib/python3/dist-packages/odoo/addons, /mnt/extra-addons
+
+    data_dir = /var/lib/odoo
+
+    list_db = True
+
+    proxy_mode = True
+
+    workers = {{ .Values.odoo.workers }}
+
+    longpolling_port = {{ .Values.service.longpollingPort }}
+
+    max_cron_threads = 1
+
+    server_wide_modules = {{ .Values.odoo.serverWideModules }}
+
+    limit_memory_hard = {{ .Values.odoo.limitMemoryHard }}
+
+    limit_memory_soft = {{ .Values.odoo.limitMemorySoft }}
+
+    limit_request = 8192
+
+    limit_time_cpu = {{ .Values.odoo.limitTimeCpu }}
+
+    limit_time_real = {{ .Values.odoo.limitTimeReal }}
+

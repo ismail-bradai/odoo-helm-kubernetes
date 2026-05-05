@@ -1,0 +1,77 @@
+﻿
+apiVersion: v1
+
+kind: PersistentVolumeClaim
+
+metadata:
+
+  name: odoo-data-pvc
+
+  namespace: {{ .Values.namespace }}
+
+spec:
+
+  accessModes:
+
+    - ReadWriteOnce
+
+  resources:
+
+    requests:
+
+      storage: {{ .Values.storage.data.size }}
+
+  storageClassName: {{ .Values.storage.class }}
+
+---
+
+apiVersion: v1
+
+kind: PersistentVolumeClaim
+
+metadata:
+
+  name: odoo-logs-pvc
+
+  namespace: {{ .Values.namespace }}
+
+spec:
+
+  accessModes:
+
+    - ReadWriteOnce
+
+  resources:
+
+    requests:
+
+      storage: {{ .Values.storage.logs.size }}
+
+  storageClassName: {{ .Values.storage.class }}
+
+---
+
+apiVersion: v1
+
+kind: PersistentVolumeClaim
+
+metadata:
+
+  name: odoo-addons-pvc
+
+  namespace: {{ .Values.namespace }}
+
+spec:
+
+  accessModes:
+
+    - ReadWriteOnce
+
+  resources:
+
+    requests:
+
+      storage: {{ .Values.storage.addons.size }}
+
+  storageClassName: {{ .Values.storage.class }}
+

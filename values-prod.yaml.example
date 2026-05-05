@@ -1,0 +1,83 @@
+﻿
+replicaCount: 3
+
+namespace: odoo-prod
+
+
+
+image:
+
+  repository: ismail20022/odoo-15-boto3
+
+  tag: latest
+
+
+
+postgresql:
+
+  host: "<POSTGRES_IP>"
+
+  port: 5432
+
+  user: "<DB_USER>"
+
+  password: "<DB_PASSWORD>"
+
+
+
+minio:
+
+  accessKeyId: "<MINIO_ACCESS_KEY>"
+
+  secretAccessKey: "<MINIO_SECRET_KEY>"
+
+  bucketName: "<BUCKET_NAME>"
+
+  host: "http://<MINIO_IP>:9000"
+
+  region: "us-east-1"
+
+  useSSL: "false"
+
+
+
+nodeSelector:
+
+  kubernetes.io/hostname: helm-worker1-vm
+
+
+
+persistence:
+
+  storageClass: "local-storage"
+
+  data:
+
+    size: 5Gi
+
+    hostPath: /mnt/kubernetes/odoo/data
+
+    nodeName: helm-worker1-vm
+
+  logs:
+
+    size: 2Gi
+
+    hostPath: /mnt/kubernetes/odoo/logs
+
+    nodeName: helm-worker1-vm
+
+  addons:
+
+    size: 2Gi
+
+    hostPath: /mnt/kubernetes/odoo/custom-addons
+
+    nodeName: helm-worker1-vm
+
+
+
+ingress:
+
+  host: odoo.data.com
+

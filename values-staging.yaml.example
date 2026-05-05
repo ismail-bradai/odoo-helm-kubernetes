@@ -1,0 +1,49 @@
+﻿
+replicaCount: 1
+
+namespace: odoo-staging
+
+
+
+minio:
+
+  accessKeyId: "<MINIO_STAGING_ACCESS_KEY>"
+
+  secretAccessKey: "<MINIO_STAGING_SECRET_KEY>"
+
+  bucketName: "<STAGING_BUCKET_NAME>"
+
+
+
+nodeSelector:
+
+  kubernetes.io/hostname: helm-worker2-vm
+
+
+
+persistence:
+
+  data:
+
+    hostPath: /mnt/kubernetes/odoo-staging/data
+
+    nodeName: helm-worker2-vm
+
+  logs:
+
+    hostPath: /mnt/kubernetes/odoo-staging/logs
+
+    nodeName: helm-worker2-vm
+
+  addons:
+
+    hostPath: /mnt/kubernetes/odoo-staging/custom-addons
+
+    nodeName: helm-worker2-vm
+
+
+
+ingress:
+
+  host: odoo-staging.data.com
+

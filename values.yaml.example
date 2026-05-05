@@ -1,0 +1,183 @@
+﻿
+# ================================
+
+# Valeurs par d├®faut du Chart Odoo
+
+# ================================
+
+
+
+# Namespace
+
+namespace: odoo-prod
+
+
+
+# Image Odoo
+
+image:
+
+  repository: ismail20022/odoo-15-boto3
+
+  tag: latest
+
+  pullPolicy: IfNotPresent
+
+
+
+# Nombre de replicas
+
+replicaCount: 3
+
+
+
+# Environnement (production ou staging)
+
+environment: production
+
+
+
+# Node scheduling
+
+nodeSelector:
+
+  environment: production
+
+
+
+tolerations:
+
+  - key: "environment"
+
+    operator: "Equal"
+
+    value: "production"
+
+    effect: "NoSchedule"
+
+
+
+# PostgreSQL
+
+postgresql:
+
+  host: "192.168.2.114"
+
+  port: "5432"
+
+  user: "odoo_admin"
+
+  password: "Valorant#12345"
+
+  dbfilter: ""
+
+
+
+# MinIO / S3
+
+minio:
+
+  accessKeyId: "odoo_prod_user"
+
+  secretAccessKey: "OdooProd#2024"
+
+  bucketName: "odoo-prod-filestore"
+
+  host: "http://192.168.2.42:9000"
+
+  region: "us-east-1"
+
+  useSSL: "false"
+
+
+
+# Odoo Configuration
+
+odoo:
+
+  serverWideModules: "base,web,attachment_s3,session_db_with_timeout"
+
+  workers: "0"
+
+  limitMemoryHard: "2684354560"
+
+  limitMemorySoft: "2147483648"
+
+  limitTimeCpu: "600"
+
+  limitTimeReal: "1200"
+
+
+
+# Stockage
+
+storage:
+
+  class: local-storage-prod
+
+  data:
+
+    size: 5Gi
+
+    path: /mnt/kubernetes/odoo/data
+
+    pvName: odoo-prod-data-pv
+
+  logs:
+
+    size: 2Gi
+
+    path: /mnt/kubernetes/odoo/logs
+
+    pvName: odoo-prod-logs-pv
+
+  addons:
+
+    size: 2Gi
+
+    path: /mnt/kubernetes/odoo/custom-addons
+
+    pvName: odoo-prod-addons-pv
+
+
+
+# Worker node (pour nodeAffinity des PV)
+
+workerNode: helm-worker1-vm
+
+
+
+# Service
+
+service:
+
+  type: ClusterIP
+
+  httpPort: 80
+
+  targetPort: 8069
+
+  longpollingPort: 8072
+
+
+
+# Ingress
+
+ingress:
+
+  enabled: true
+
+  className: cilium
+
+  host: odoo.data.com
+
+  annotations:
+
+    ingress.cilium.io/loadbalancer-mode: dedicated
+
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+

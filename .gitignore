@@ -1,0 +1,10 @@
+﻿# Fichiers secrets r├®els ÔÇö ne jamais committer
+values-prod.yaml
+values-staging.yaml
+secret.yaml
+templates/secret.yaml
+
+# Fichiers syst├¿me
+.DS_Store
+*.tmp
+*.bak

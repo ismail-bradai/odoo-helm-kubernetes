@@ -1,0 +1,35 @@
+﻿
+apiVersion: "cilium.io/v2alpha1"
+
+kind: CiliumLoadBalancerIPPool
+
+metadata:
+
+  name: first-pool
+
+spec:
+
+  blocks:
+
+    - cidr: "192.168.2.60/29"
+
+---
+
+apiVersion: "cilium.io/v2alpha1"
+
+kind: CiliumL2AnnouncementPolicy
+
+metadata:
+
+  name: l2-policy
+
+spec:
+
+  interfaces:
+
+    - ^enp0s8$
+
+  externalIPs: true
+
+  loadBalancerIPs: true
+
