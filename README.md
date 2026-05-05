@@ -21,6 +21,7 @@ pg-vm    (192.168.2.114) → PostgreSQL 14 (sessions partagées)
 
 ## Structure du chart
 odoo-chart/
+odoo-chart/
 ├── Chart.yaml
 ├── values.yaml                   # valeurs par défaut
 ├── values-prod.yaml.example      # template prod
