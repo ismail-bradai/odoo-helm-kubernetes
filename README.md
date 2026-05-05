@@ -23,22 +23,31 @@ pg-vm    (192.168.2.114) → PostgreSQL 14 (sessions partagées)
 - Filestore : MinIO via module s3_attachment_manager_v2
 
 ## Structure du chart
-odoo-chart/
-odoo-chart/
-├── Chart.yaml
-├── values.yaml                   # valeurs par défaut
-├── values-prod.yaml.example      # template prod
-├── values-staging.yaml.example   # template staging
-├── cilium-lb-pool.yml
-└── templates/
-├── _helpers.tpl
-├── configmap.yaml
-├── deployment.yaml
-├── ingress.yaml
-├── pv.yaml
-├── pvc.yaml
-├── secret.yaml
-└── service.yaml
+odoo-k8s-ha/                          ← Repo GitHub racine
+├── README.md
+├── .gitignore
+│
+├── helm-chart/                         ← Chart Helm (1 seul niveau)
+│   ├── Chart.yaml
+│   ├── values.yaml                     # Valeurs par défaut
+│   ├── values-prod.yaml                # Override prod
+│   ├── values-staging.yaml             # Override staging
+│   └── templates/
+│       ├── _helpers.tpl
+│       ├── configmap.yaml
+│       ├── deployment.yaml
+│       ├── ingress.yaml
+│       ├── pv.yaml
+│       ├── pvc.yaml
+│       ├── secret.yaml
+│       └── service.yaml
+│
+├── infrastructure/                     ← Fichiers infra hors Helm
+│   └── cilium-lb-pool.yml              ← Manifeste Cilium ici !
+│
+└── scripts/
+    ├── deploy-prod.sh
+    └── deploy-staging.sh
 
 ## Features
 
