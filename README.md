@@ -3,6 +3,8 @@
 Déploiement complet d'Odoo 15 packagé en Helm Chart avec isolation Prod/Staging, stockage MinIO S3 et sessions PostgreSQL partagées.
 
 ## Architecture
+<img width="939" height="1510" alt="Diagramme sans nom drawio (1)" src="https://github.com/user-attachments/assets/cd3a83c6-30c0-402d-a813-7a9ce3ce7b7d" />
+
 helm-master-vm  (192.168.2.199) — Control Plane K8s v1.28
 ├── helm-worker1-vm → namespace: odoo-prod    (3 replicas)
 └── helm-worker2-vm → namespace: odoo-staging (1 replica)
